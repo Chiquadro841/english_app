@@ -1,38 +1,40 @@
 import streamlit as st
 import pandas as pd
 
-# ---- Sample Data ----
-phrasal_verbs = pd.DataFrame({
-    "Italian": ["andare avanti", "dare su", "mettere da parte"],
-    "English": ["carry on", "look out onto", "put aside"]
-})
-
-words_adjectives = pd.DataFrame({
-    "Italian": ["bello", "veloce", "felice"],
-    "English": ["beautiful", "fast", "happy"]
-})
-
-# ---- Streamlit App ----
+# ---- Streamlit Config ----
 st.set_page_config(page_title="English Learning App", layout="wide")
-
 st.title("📚 English Phrasal Verbs & Vocabulary")
 
-# ---- Menu ----
-menu = st.selectbox("Choose category:", ["Phrasal Verbs", "Words & Adjectives"])
+# ---- Caricamento CSV ----
+# Assumiamo che i file siano phrasal_verbs.csv e words_adjectives.csv con colonne: Italian, English
+phrasal_verbs = pd.read_csv("phrasal_verbs.csv")
+words_adjectives = pd.read_csv("words_adjectives.csv")
 
-# ---- Function to show table with hidden translations ----
+# ---- Menu con larghezza limitata ----
+menu_container = st.container()
+with menu_container:
+    st.markdown(
+        """
+        <style>
+        div.stSelectbox {max-width: 300px;}
+        </style>
+        """, 
+        unsafe_allow_html=True
+    )
+    menu = st.selectbox("Scegli categoria:", ["Phrasal Verbs", "Words & Adjectives"])
+
+# ---- Funzione per mostrare tabella con traduzione nascosta ----
 def show_table(df):
     for idx, row in df.iterrows():
-        col1, col2 = st.columns([2, 1])
-        col1.write(f"**{row['Italian']}**")
-        # Hidden English word with button
-        if col2.button("👁️", key=f"{idx}-{row['Italian']}"):
-            col2.success(row["English"])
-        else:
-            col2.write("")
+        st.write(f"**{row['Italian']}**")
+        # Pulsante per mostrare la traduzione sotto la parola italiana
+        key = f"{idx}-{row['Italian']}"
+        if st.button("👁️ Mostra traduzione", key=key):
+            st.info(row["English"])
 
-# ---- Display table based on menu selection ----
+# ---- Mostra tabella in base al menu ----
 if menu == "Phrasal Verbs":
     show_table(phrasal_verbs)
 elif menu == "Words & Adjectives":
     show_table(words_adjectives)
+
