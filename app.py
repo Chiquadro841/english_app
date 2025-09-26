@@ -30,7 +30,7 @@ def show_table(df):
         st.write(f"**{row['Italian']}**")
         # Pulsante per mostrare la traduzione sotto la parola italiana
         key = f"{idx}-{row['Italian']}"
-        if st.button("👁️ Mostra traduzione", key=key):
+        if st.button("▶️ Mostra traduzione", key=key):
             st.info(row["English"])
 
 # ---- Mostra tabella in base al menu ----
