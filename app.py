@@ -9,6 +9,7 @@ st.title("📚 English Phrasal Verbs & Vocabulary")
 # Assumiamo che i file siano phrasal_verbs.csv e words_adjectives.csv con colonne: Italian, English
 phrasal_verbs = pd.read_csv("phrasal_verbs.csv")
 words_adjectives = pd.read_csv("words_adjectives.csv")
+miscellaneous= pd.read_cv("miscellaneous.csv")
 
 # ---- Menu con larghezza limitata ----
 menu_container = st.container()
@@ -21,7 +22,7 @@ with menu_container:
         """, 
         unsafe_allow_html=True
     )
-    menu = st.selectbox("Scegli categoria:", ["Phrasal Verbs", "Words & Adjectives"])
+    menu = st.selectbox("Scegli categoria:", ["Phrasal Verbs", "Words & Adjectives","miscellaneous"])
 
 # ---- Funzione per mostrare tabella con traduzione nascosta ----
 def show_table(df):
@@ -35,7 +36,8 @@ def show_table(df):
 # ---- Mostra tabella in base al menu ----
 if menu == "Phrasal Verbs":
     show_table(phrasal_verbs)
-elif menu == "Words & Adjectives":
+if menu == "Words & Adjectives":
     show_table(words_adjectives)
-
+elif menu=="miscellaneous":
+    show_table(miscellaneous)
 
