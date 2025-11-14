@@ -22,7 +22,7 @@ with menu_container:
         """, 
         unsafe_allow_html=True
     )
-    menu = st.selectbox("Scegli categoria:", ["Phrasal Verbs", "Words & Adjectives","miscellaneous"])
+    menu = st.selectbox("Scegli categoria:", ["Phrasal Verbs", "Words & Adjectives","words2"])
 
 # ---- Funzione per mostrare tabella con traduzione nascosta ----
 def show_table(df):
